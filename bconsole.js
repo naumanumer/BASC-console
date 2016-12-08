@@ -61,9 +61,14 @@ function BASIC_console(element, char_width) {
       table.style.color = color;
   }
 
+  this.getTrFromPos = function(line, col){
+    var trs = $(table).find("tbody>tr"):
+    alert(trs);
+  }
+  
   this.write = function(text){
       var element = document.getElementById('line-0--col-0');
-      alert("df"+element);
+      getTrFromPos(1,1);
   }
 
   this.clear = function() {
