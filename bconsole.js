@@ -21,6 +21,7 @@ function BASIC_console(element, char_width) {
       pixels = [], // color values
       color = 0, // current color
       table,
+      crntpos = [{line: 0},{col: 0}]
       lines = 25;
 
   function init() {
@@ -37,8 +38,10 @@ function BASIC_console(element, char_width) {
     tbody = document.createElement('tbody');
     for (y = 0; y < lines; y ++) {
       tr = document.createElement('tr');
+      tr.setAttribute('id', 'line-'+y);
       for (x = 0; x < char_width; x += 1) {
         td = document.createElement('td');
+        td.setAttribute('id', 'line-'+y+'--col'+x);
         
         tr.appendChild(td);
       }
@@ -58,8 +61,9 @@ function BASIC_console(element, char_width) {
       table.style.color = color;
   }
 
-  this.write = function(){
-      
+  this.write = function(text){
+      var element = document.getElementById('line-0--col-0');
+      element.appendChild('a');
   }
 
   this.clear = function() {
