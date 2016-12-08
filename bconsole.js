@@ -33,7 +33,7 @@ function BASIC_console(element, char_width) {
     //loresPixel.length = width * height;
 
     table = document.createElement('table');
-    table.style.backgroundColor = 'black';
+    
 alert("565");
     tbody = document.createElement('tbody');
     for (y = 0; y < lines; y ++) {
