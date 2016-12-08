@@ -136,4 +136,5 @@ function BASIC_console(element, char_width) {
 
 
   init();
+  write('56');
 }
