@@ -62,14 +62,17 @@ function BASIC_console(element, char_width) {
   }
 
   this.getTdFromPos = function(line, col){
+    alert("6");
     var tr = $(table).find("tbody>tr").index(line):
+    alert("7");
     var td = $(tr).find("td").index(col);
     alert("a"+ td);
     return td;
   }
   
   this.write = function(text){
-      var element = document.getElementById('line-0--col-0');
+    alert("555");  
+    var element = document.getElementById('line-0--col-0');
       getTdFromPos(1,1);
   }
 
