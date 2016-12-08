@@ -64,6 +64,7 @@ function BASIC_console(element, char_width) {
   this.getTdFromPos = function(line, col){
     var tr = $(table).find("tbody>tr").index(line):
     var td = $(tr).find("td").index(col);
+    alert(td);
     return td;
   }
   
