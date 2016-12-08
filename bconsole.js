@@ -63,7 +63,7 @@ function BASIC_console(element, char_width) {
 
   this.write = function(text){
       var element = document.getElementById('line-0--col-0');
-      element.appendChild('a');
+      document.write("df"+element);
   }
 
   this.clear = function() {
