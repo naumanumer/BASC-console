@@ -70,7 +70,7 @@ function BASIC_console(element, char_width) {
   
   this.write = function(text){
       var element = document.getElementById('line-0--col-0');
-      alert(getTrFromPos(1,1));
+      getTdFromPos(1,1);
   }
 
   this.clear = function() {
