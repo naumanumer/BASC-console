@@ -38,10 +38,10 @@ alert("565");
     tbody = document.createElement('tbody');
     for (y = 0; y < lines; y ++) {
       tr = document.createElement('tr');
-      //tr.setAttribute('id', 'line-'+y);
+      tr.setAttribute('id', 'line-'+y);
       for (x = 0; x < char_width; x += 1) {
         td = document.createElement('td');
-        //td.setAttribute('id', 'line-'+y+'--col'+x);
+        td.setAttribute('id', 'line-'+y+'--col'+x);
         
         tr.appendChild(td);
       }
