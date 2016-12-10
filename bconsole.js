@@ -14,35 +14,29 @@
 //   color_index = lores.getPixel( x, y )
 //   { width: w, height: h } = lores.getScreenSize()
 
-function BASIC_console(element, char_width) {
+function BASIC_console(element, width) {
 
-  var COLORS, // Apple II to HTML color table
-      loresPixel = [], // element references
-      pixels = [], // color values
-      color = 0, // current color
-      table,
-      crntpos = [{line: 0},{col: 0}]
-      lines = 25;
+  var foreColor = "#999", backColor = "#212121",
+    table, input,
+    lines = 25,
+    foreColor = "#fff",
+    crntPos = { line: 0, char: 0 };
 
-  function init() {
+  this.init = function () {
     var x, y, tbody, tr, td;
 
-    //pixels = [];
-    //pixels.length = width * height;
-    //loresPixel = [];
-    //loresPixel.length = width * height;
-
     table = document.createElement('table');
-    
-
     tbody = document.createElement('tbody');
-    for (y = 0; y < lines; y ++) {
+
+    for (y = 0; y < lines; y++) {
       tr = document.createElement('tr');
-      tr.setAttribute('id', 'line-'+y);
-      for (x = 0; x < char_width; x += 1) {
+      $(tr).attr('id', `line-${y}`)
+      for (x = 0; x < width; x += 1) {
         td = document.createElement('td');
-        td.setAttribute('id', 'line-'+y+'--col-'+x);
-        
+        $(td).attr('id', `line-${y}-col-${x}`)
+        td.style.backgroundColor = backColor;
+        td.style.color = foreColor;
+
         tr.appendChild(td);
       }
       tbody.appendChild(tr);
@@ -51,100 +45,142 @@ function BASIC_console(element, char_width) {
 
     element.innerHTML = "";
     element.appendChild(table);
-  }
+    this.appendInput();
+  };
 
-  this.setBackground = function(color){
-      table.style.backgroundColor = color;
-  }
-
-  this.setForecolor = function(color){
-      table.style.color = color;
-  }
-
-  this.getTdFromPos = function(line, col){
-    alert("6");
-    var tr = $(table).find("tbody>tr").index(line):
-    alert("7");
-    var td = $(tr).find("td").index(col);
-    alert("a"+ td);
-    return td;
-  }
-  
-  this.write = function(text){
-    alert("555");  
-    var element = document.getElementById('line-0--col-0');
-      getTdFromPos(1,1);
-  }
-
-  this.clear = function() {
-    var x, y, pixel;
-    for (y = 0; y < height; y += 1) {
+  this.setBackground = function (color) {
+    backColor = color;
+    for (y = 0; y < lines; y++) {
       for (x = 0; x < width; x += 1) {
-        pixel = loresPixel[y * width + x];
-        pixel.style.backgroundColor = "black";
-        pixels[y * width + x] = 0;
+        var td = document.getElementById(`line-${y}-col-${x}`);
+        td.style.backgroundColor = color;
       }
     }
-
   };
 
-  function plot(x, y) {
-    var pixel = loresPixel[y * width + x];
-    if (pixel) {
-      pixel.style.backgroundColor = COLORS[color];
-      pixels[y * width + x] = color;
+  this.setForecolor = function (color) {
+    foreColor = color;
+    for (y = 0; y < lines; y++) {
+      for (x = 0; x < width; x++) {
+        var td = document.getElementById(`line-${y}-col-${x}`);
+        td.style.color = color;
+      }
+    }
+  };
+
+  this.write = function (text) {
+    for (var i = 0, len = text.length; i < len; i++) {
+      this.writeChar(text[i], crntPos);
+
+      if (crntPos.char < width - 1)
+        crntPos.char++;
+      else {
+        crntPos.line++;
+        crntPos.char = 0;
+      }
+    }
+  };
+
+  this.writeChar = function (char, pos) {
+    var x = pos.char,
+      y = pos.line;
+    var td = document.getElementById(`line-${y}-col-${x}`);
+    td.innerText = char[0];
+  };
+
+  this.writeAtLine = function (text, lineNum) {
+    for (var char = 0; char < width; char++) {
+      var td = document.getElementById(`line-${lineNum}-col-${char}`);
+      if (text[char])
+        td.innerText = text[char];
     }
   }
 
-  this.plot = function(x, y) {
-    plot(x, y);
+  this.inertLineBreak = function(){
+    crntPos.line++;
+    crntPos.char = 0;
+  }
+
+  this.backSpace = function(){
+    this.writeChar(" ", {line: crntPos.line, char: crntPos.char-1});
+    crntPos.char--;
+  }
+
+  this.clear = function () {
+    for (var y = 0; y < lines; y++) {
+      for (var x = 0; x < width; x++) {
+        var td = document.getElementById(`line-${y}-col-${x}`);
+        td.innerText = "";
+      }
+    }
+    crntPos.line=0;
+    crntPos.char=0;
   };
 
-  this.getPixel = function(x, y) {
-    if (0 <= x && x < width &&
-            0 <= y && y < height) {
-
-      return pixels[y * width + x];
-    } else {
-      return 0;
+  this.clearLine = function (lineNum) {
+    for (var i = 0; i < width; i++) {
+      var td = document.getElementById(`line-${lineNum}-col-${i}`);
+      td.innerText = "";
     }
   };
 
-  this.hlin = function(x1, x2, y) {
-    var x;
-    if (x1 > x2) {
-      x = x1;
-      x1 = x2;
-      x2 = x;
+  this.scrollUp = function () {
+    var nextLine = "";
+
+    for (var i = 0; i < lines; i++) {
+      nextLine = this.cloneLine(i + 1);
+      this.clearLine(i);
+      this.writeAtLine(nextLine, i);
     }
 
-    for (x = x1; x <= x2; x += 1) {
-      plot(x, y);
+    crntPos.line--;
+  };
+
+  this.cloneLine = function (lineNum) {
+    var text = "";
+    for (var x = 0; x < width; x++) {
+      var td = document.getElementById(`line-${lineNum}-col-${x}`);
+      if (td) {
+        if (td.innerText)
+          text += td.innerText;
+        else
+          text += " ";
+      }
     }
-  };
+    return text;
+  }
 
-  this.vlin = function(y1, y2, x) {
-    var y;
-    if (y1 > y2) {
-      y = y1;
-      y1 = y2;
-      y2 = y;
+  this.cloneText = function () {
+    var text = ""
+
+    for (var i = 0; i < lines; i++) {
+      var line = this.cloneLine(i);
+      if (line)
+        text += line + "\n";
     }
 
-    for (y = y1; y <= y2; y += 1) {
-      plot(x, y);
-    }
+    return text;
+  }
+
+  this.getScreenSize = function () {
+    return { width: width, height: lines };
   };
 
-  this.getScreenSize = function() {
-    return { width: width, height: height };
+  this.getScreenSizeInPx = function () {
+    return { width: $(table).width(), height: $(table).height() };
+  }
+
+  this.getColor = function () {
+    return { fore: foreColor, back: backColor };
   };
 
-  this.show = function(state) {
-    element.style.visibility = state ? "visible" : "hidden";
+  this.appendInput = function () {
+    input = document.createElement('input');
+    input.style.height = this.getScreenSizeInPx().height;
+    input.style.width = this.getScreenSizeInPx().width;
+    $(input).attr('id', 'console-input')
+    element.appendChild(input);
   };
 
 
-  init();
-  
-}
+};
