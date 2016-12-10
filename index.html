@@ -1,16 +1,30 @@
 <style>
-#lores td{
+  @font-face {
+    font-family: freedos;
+    src: url(freedos_16.woff);
+  }
+
+  #lores td {
     width: 8px;
     height: 16px;
-    
-}
-#lores table{
+  }
+  
+  #lores table {
     table-layout: fixed;
     border-collapse: collapse;
-    
-}
+    font-family: freedos;
+  }
+  
+  #console-input {
+    margin-top: -400px;
+    background: transparent;
+    color: transparent;
+    border: 0px;
+    cursor: default;
+  }
 </style>
 
+<button onclick="bconsole.clear();">Clear Console</button>
 <div id="frame" class="jsb-frame" style="float: left; margin: 5px;" tabIndex="0">
   <div id="screen-wrapper" class="jsb-wrapper">
     <div id="lores" class="jsb-lores"></div>
@@ -20,16 +34,27 @@
   </div>
 </div>
 
-<script
-  src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
-  integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
-  crossorigin="anonymous"></script>
+
+
+
+<script src="jquery.min.js"></script>
 <script src="bconsole.js"></script>
 <script>
-    
    var lore = document.getElementById('lores');
-    
-   var bconsole = new BASIC_console(lore, 80, 25);
-    bconsole.write("5");
-  
+   var bconsole = new BASIC_console(lore, 80);
+   bconsole.init();
+
+   $("#console-input").keyup(function( e ) {
+     if (e.keyCode == 13) {
+       bconsole.inertLineBreak();
+       $(this).val('');
+       return false;
+     } else if (e.keycode == 8){
+       bconsole.backSpace();
+       return false;
+     }
+    var text = $(this).val();
+    bconsole.write(text);
+    $(this).val('');
+  });
 </script>
