@@ -1,4 +1,5 @@
 var input;
+
 function BASIC_console(element, width) {
 
   var backColor = "#212121",
@@ -279,7 +280,38 @@ function BASIC_console(element, width) {
     this.showCaret();
   }
 
-// <!-- Caret Movements --> 
+  this.moveCaretTo = function(line, char){
+    this.removeCaret();
+    this.crntPos.char = char;
+    this.crntPos.line = line;
+    this.showCaret();
+  }
+
+  this.moveCaretToEndOfChar = function(){
+    var endOfChar = this.getEndOfWord(this.crntPos.line, this.crntPos.char);
+    this.moveCaretTo(endOfChar.line, endOfChar.char);
+  }
+
+// <!-- Caret Movements -->
+
+  this.getEndOfWord= function(line, char){
+    var x, y, found;
+    for (y = line; y < lines; y++) {
+      for (x = char; x < width; x += 1) {
+        var tdText = document.getElementById(`line-${y}-col-${x}`).innerHTML;
+        tdChar = tdText = tdText.slice(0, 6) == '&nbsp;' ? '&nbsp;' : tdText.slice(0, 1);
+        if (tdChar.match(/[a-z]/i)) 
+            continue;
+        else{
+          found =true;
+          break;
+        }
+      }
+      if(found)
+        break;
+    }
+    return {line: y, char:x};
+  }
 
   this.getElementByPos = function (line, char) {
     return document.getElementById(`line-${line}-col-${char}`);
