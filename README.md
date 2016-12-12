@@ -45,10 +45,21 @@ $("#console-input").keyup(function( e ) {
  
 ## API references
 
-* `BASIC_console(ELEMENT, width)`
-	* Element
-	* width
-* dsjh
+`BASIC_console(element, width)`
+	* `element: any` HTML DOM elemen
+	* `width: int` Number of chars in a line. (each char have 8px width and 19px height);
+### Props
+* `.crntPos` currencaret position. formate: `{line: LINE_NO, char: ROW_NO}`.
+* `.isCaretShown : boolean` 
+
+### Methods
+* `.init()`
+	* Takes no arguments and initialize `BASIC_console` in the given element while initializing `BASIC_console`
+* `.setBackground(color)`
+	* `color: string` any valid css color.
+* `.setForecolor(color)`
+	* `color: string` any valid css color. (still no sets caret color).
+
 
 
 # Contribute
