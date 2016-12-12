@@ -4,7 +4,7 @@ function BASIC_console(element, width) {
     table, input,
     lines = 25,
     foreColor = "#fff",
-    caretText = "_";
+    caretText = "&#9608;";
 
   this.crntPos = { line: 0, char: 0 };
   this.isCaretShown = false;
@@ -194,7 +194,10 @@ function BASIC_console(element, width) {
   this.removeCaret = function () {
     var carettd = this.getElementByPos(this.crntPos.line, this.crntPos.char);
     var tdText = carettd.innerHTML;
-    tdText = tdText.replace('<span class="blinking-cursor">'+caretText+'</span>', " ");
+    if(tdText.length != 38)
+      tdText = tdText.slice(0,1);
+    else
+      tdText = '';
     carettd.innerHTML = tdText;
   }
 
