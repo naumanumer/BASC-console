@@ -18,6 +18,15 @@ NOTE: all te denpendencies are provided with code itself.
 
 ## API references
 
+Initialize the console using:
+```javascript
+var bconsoleElement = document.getElementById('ELEMENT_ID_HERE');
+var bconsole = new BASIC_console(bconsoleElement, 80);
+bconsole.init();
+```
+
+
+
 # Contribute
 if you want to contribute in the project feel free to **Fork** this project made chages and make a pull request.
 
