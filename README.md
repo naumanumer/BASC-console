@@ -45,7 +45,8 @@ $("#console-input").keyup(function( e ) {
  
 ## API references
 
-* `BASIC_console.init` T
+1. `BASIC_console(ELEMENT, width)`
+	a. Element
 
 
 # Contribute
