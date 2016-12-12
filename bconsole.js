@@ -4,7 +4,7 @@ function BASIC_console(element, width) {
     table, input,
     lines = 25,
     foreColor = "#fff",
-    caretText = "&#9608;";
+    caretText = "_";
 
   this.crntPos = { line: 0, char: 0 };
   this.isCaretShown = false;
@@ -187,15 +187,15 @@ function BASIC_console(element, width) {
 
   this.showCaret = function () {
     var crntElement = this.getElementByPos(this.crntPos.line, this.crntPos.char);
-    $(crntElement).addClass('blinking-cursor');
-    $(crntElement).html(caretText);
+    $(crntElement).html($(crntElement).html()+'<span class="blinking-cursor">'+caretText+'</span>');
     this.isCaretShown = true;
   }
 
   this.removeCaret = function () {
-    var carettd = $('.blinking-cursor');
-    $(carettd).html('');
-    $(carettd).removeClass('blinking-cursor');
+    var carettd = this.getElementByPos(this.crntPos.line, this.crntPos.char);
+    var tdText = carettd.innerHTML;
+    tdText = tdText.replace('<span class="blinking-cursor">'+caretText+'</span>', " ");
+    carettd.innerHTML = tdText;
   }
 
   this.refreshCaret = function(){
@@ -215,48 +215,56 @@ function BASIC_console(element, width) {
 
   this.moveCaretUp = function(){
     if (this.crntPos.line>0){
+      this.removeCaret();
       this.crntPos.line--
-      this.refreshCaret();
+      this.showCaret();
     }
   }
   
   this.moveCaretDown = function(){
     if (this.crntPos.line<lines-1){
+      this.removeCaret();
       this.crntPos.line++
-      this.refreshCaret();
+      this.showCaret();
     }
   }
 
   this.moveCaretBack = function(){
     if (this.crntPos.char > 0){
+      this.removeCaret();
       this.crntPos.char--
-      this.refreshCaret();
+      this.showCaret();
     } else {
+      this.removeCaret();
       this.crntPos.char = width-1;
       this.crntPos.line--
-      this.refreshCaret();
+      this.showCaret();
     }
   }
 
   this.moveCaretFore = function(){
     if (this.crntPos.char < width-1){
+      this.removeCaret();
       this.crntPos.char++
-      this.refreshCaret();
+      this.showCaret();
     } else {
+      this.removeCaret();
       this.crntPos.char = 0;
       this.crntPos.line++
-      this.refreshCaret();
+      this.showCaret();
     }
   }
 
   this.moveCaretToHome = function(){
+    this.removeCaret();
     this.crntPos.char = 0;
-    this.refreshCaret();
+    this.showCaret();
   }
 
   this.moveCaretToEnd = function(){
+    this.removeCaret();
     this.crntPos.char = width-1;
-    this.refreshCaret();
+    this.showCaret();
   }
 
 // <!-- Caret Movements --> 
