@@ -45,8 +45,10 @@ $("#console-input").keyup(function( e ) {
  
 ## API references
 
-1. `BASIC_console(ELEMENT, width)`
-	a. Element
+* `BASIC_console(ELEMENT, width)`
+	* Element
+	* width
+* dsjh
 
 
 # Contribute
