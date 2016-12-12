@@ -79,6 +79,19 @@ $("#console-input").keyup(function( e ) {
 	* Takes no argument. 
 * `.cloneLine(linenum)` Returns text from specified line
 	* `linenum: int` any valid line number.
+* `.cloneText()` Returns console text
+	* Takes no argument.
+* `.getScreenSize()` Returns screen dimensions. Format: `{ width: WIDTH_IN_PX, height: HEIGHT_IN_PX }`
+	* Takes no argument.
+* `.showCaret()` shows caret.
+	* Takes no argument.
+* `.removeCaret()` hides caret.
+	* Takes no argument
+* `.setCaretText(char)` sets char as caret
+	* `char: string` char that is rendered as caret default is  `&#9608;`
+* `.getElementByPos(line, char)` return `td` at position
+	* `line: int` line number
+	* `char: int` row number
 
 
 # Contribute
