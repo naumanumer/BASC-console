@@ -24,6 +24,25 @@ var bconsoleElement = document.getElementById('ELEMENT_ID_HERE');
 var bconsole = new BASIC_console(bconsoleElement, 80);
 bconsole.init();
 ```
+you can use this to handle **Caret** properly:
+```javascript
+$("#console-input").keyup(function( e ) {
+	 if(bconsole.isCaretShown){
+	  if (e.keyCode == 13) {
+		bconsole.insertLineBreak();
+		$(this).val('');
+		return false;
+	  } else if (e.keyCode == 8){
+		bconsole.backSpace();
+		return false;
+	  }
+	  var text = $(this).val();
+	  bconsole.write(text);
+	  $(this).val('');
+	 }
+  });
+ ```
+ 
 
 
 
