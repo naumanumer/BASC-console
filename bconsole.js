@@ -176,11 +176,14 @@ function BASIC_console(element, width) {
 
   this.appendInput = function () {
     input = document.createElement('input');
-    input.style.height = this.getScreenSizeInPx().height;
-    input.style.width = this.getScreenSizeInPx().width;
+    input.style.height = this.getScreenSize().height;
+    input.style.width = this.getScreenSize().width;
     $(input).attr('id', 'console-input')
     element.appendChild(input);
   };
+
+
+// <-- Caret Actions -->
 
   this.showCaret = function () {
     var crntElement = this.getElementByPos(this.crntPos.line, this.crntPos.char);
@@ -204,6 +207,59 @@ function BASIC_console(element, width) {
     caretText = char[0];
     this.refreshCaret();
   }
+
+// <!-- Caret Actions -->
+
+
+// <-- Caret Movements -->
+
+  this.moveCaretUp = function(){
+    if (this.crntPos.line>0){
+      this.crntPos.line--
+      this.refreshCaret();
+    }
+  }
+  
+  this.moveCaretDown = function(){
+    if (this.crntPos.line<lines-1){
+      this.crntPos.line++
+      this.refreshCaret();
+    }
+  }
+
+  this.moveCaretBack = function(){
+    if (this.crntPos.char > 0){
+      this.crntPos.char--
+      this.refreshCaret();
+    } else {
+      this.crntPos.char = width-1;
+      this.crntPos.line--
+      this.refreshCaret();
+    }
+  }
+
+  this.moveCaretFore = function(){
+    if (this.crntPos.char < width-1){
+      this.crntPos.char++
+      this.refreshCaret();
+    } else {
+      this.crntPos.char = 0;
+      this.crntPos.line++
+      this.refreshCaret();
+    }
+  }
+
+  this.moveCaretToHome = function(){
+    this.crntPos.char = 0;
+    this.refreshCaret();
+  }
+
+  this.moveCaretToEnd = function(){
+    this.crntPos.char = width-1;
+    this.refreshCaret();
+  }
+
+// <!-- Caret Movements --> 
 
   this.getElementByPos = function (line, char) {
     return document.getElementById(`line-${line}-col-${char}`);
