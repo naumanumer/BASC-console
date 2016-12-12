@@ -1,7 +1,8 @@
+var input;
 function BASIC_console(element, width) {
 
   var backColor = "#212121",
-    table, input,
+    table,
     lines = 25,
     foreColor = "#fff",
     caretText = "&#9608;";
@@ -21,9 +22,11 @@ function BASIC_console(element, width) {
       for (x = 0; x < width; x += 1) {
         td = document.createElement('td');
         $(td).attr('id', `line-${y}-col-${x}`)
+
+        td.innerHTML = '&nbsp;';
         td.style.backgroundColor = backColor;
         td.style.color = foreColor;
-
+      
         tr.appendChild(td);
       }
       tbody.appendChild(tr);
@@ -56,8 +59,8 @@ function BASIC_console(element, width) {
   };
 
   this.write = function (text) {
-    if(this.isCaretShown)
-      this.removeCaret();
+    
+    this.removeCaret(this.isCaretShown);
     for (var i = 0, len = text.length; i < len; i++) {
       this.writeChar(text[i], this.crntPos);
 
@@ -76,7 +79,7 @@ function BASIC_console(element, width) {
     var x = pos.char,
       y = pos.line;
     var td = document.getElementById(`line-${y}-col-${x}`);
-    td.innerHTML = char;
+    td.innerHTML = char == " " ? '&nbsp;' : char;
 
   };
 
@@ -89,14 +92,15 @@ function BASIC_console(element, width) {
   }
 
   this.insertLineBreak = function () {
+    this.removeCaret(this.isCaretShown);
     this.crntPos.line++;
     this.crntPos.char = 0;
     if(this.isCaretShown)
-          this.refreshCaret();
+          this.showCaret();
   }
 
   this.backSpace = function () {
-    this.removeCaret();
+    this.removeCaret(this.isCaretShown);
     if (this.crntPos.char - 1 < 0) {
       var current = { line: this.crntPos.line - 1, char: width - 1 }
       this.writeChar(" ", current);
@@ -181,6 +185,7 @@ function BASIC_console(element, width) {
     input.style.width = this.getScreenSize().width;
     $(input).attr('id', 'console-input')
     element.appendChild(input);
+    $(input).focus();
   };
 
 
@@ -192,18 +197,21 @@ function BASIC_console(element, width) {
     this.isCaretShown = true;
   }
 
-  this.removeCaret = function () {
+  this.removeCaret = function (caretShow = false) {
     var carettd = this.getElementByPos(this.crntPos.line, this.crntPos.char);
     var tdText = carettd.innerHTML;
-    if(tdText.length != 38)
-      tdText = tdText.slice(0,1);
+    if(tdText.length != 38) {
+      tdText = tdText.slice(0, 6) == '&nbsp;' ? '&nbsp;' : tdText.slice(0, 1);
+    }
     else
-      tdText = '';
+      tdText = '&nbsp;';
     carettd.innerHTML = tdText;
+    if (!caretShow)
+      this.isCaretShown =false
   }
 
   this.refreshCaret = function(){
-    this.removeCaret();
+    this.removeCaret(this.isCaretShown);
     this.showCaret();
   }
 
@@ -219,7 +227,7 @@ function BASIC_console(element, width) {
 
   this.moveCaretUp = function(){
     if (this.crntPos.line>0){
-      this.removeCaret();
+      this.removeCaret(this.isCaretShown);
       this.crntPos.line--
       this.showCaret();
     }
@@ -227,7 +235,7 @@ function BASIC_console(element, width) {
   
   this.moveCaretDown = function(){
     if (this.crntPos.line<lines-1){
-      this.removeCaret();
+      this.removeCaret(this.isCaretShown);
       this.crntPos.line++
       this.showCaret();
     }
@@ -235,11 +243,11 @@ function BASIC_console(element, width) {
 
   this.moveCaretBack = function(){
     if (this.crntPos.char > 0){
-      this.removeCaret();
+      this.removeCaret(this.isCaretShown);
       this.crntPos.char--
       this.showCaret();
     } else {
-      this.removeCaret();
+      this.removeCaret(this.isCaretShown);
       this.crntPos.char = width-1;
       this.crntPos.line--
       this.showCaret();
@@ -248,11 +256,11 @@ function BASIC_console(element, width) {
 
   this.moveCaretFore = function(){
     if (this.crntPos.char < width-1){
-      this.removeCaret();
+      this.removeCaret(this.isCaretShown);
       this.crntPos.char++
       this.showCaret();
     } else {
-      this.removeCaret();
+      this.removeCaret(this.isCaretShown);
       this.crntPos.char = 0;
       this.crntPos.line++
       this.showCaret();
@@ -260,7 +268,7 @@ function BASIC_console(element, width) {
   }
 
   this.moveCaretToHome = function(){
-    this.removeCaret();
+    this.removeCaret(this.isCaretShown);
     this.crntPos.char = 0;
     this.showCaret();
   }
