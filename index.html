@@ -1,37 +1,99 @@
 <style>
-  @font-face {
-    font-family: freedos;
-    src: url(freedos_16.woff);
-  }
-
-  #lores td {
-    width: 8px;
-    height: 16px;
-  }
-  
-  #lores table {
-    table-layout: fixed;
-    border-collapse: collapse;
-    font-family: freedos;
-  }
-  
-  #console-input {
-    margin-top: -400px;
-    background: transparent;
-    color: transparent;
-    border: 0px;
-    cursor: default;
-  }
+	@font-face {
+		font-family: freedos;
+		src: url(freedos_16.woff);
+	}
+	
+	#lores td {
+		width: 8px;
+		height: 19px;
+	}
+	
+	#lores table {
+		table-layout: fixed;
+		border-collapse: collapse;
+		font-family: freedos;
+		font-size: 16px;
+	}
+	
+	#console-input {
+		margin-top: -475px;
+		background: transparent;
+		color: transparent;
+		border: 0px;
+		cursor: default;
+	}
+	
+	.blinking-cursor {
+		font-weight: 100;
+		font-size: 14px;
+		color: #fff;
+		-webkit-animation: 1s blink step-end infinite;
+		-moz-animation: 1s blink step-end infinite;
+		-ms-animation: 1s blink step-end infinite;
+		-o-animation: 1s blink step-end infinite;
+		animation: 1s blink step-end infinite;
+	}
+	
+	@keyframes "blink" {
+		from,
+		to {
+			color: white;
+		}
+		50% {
+			color: transparent;
+		}
+	}
+	
+	@-moz-keyframes blink {
+		from,
+		to {
+			color: white;
+		}
+		50% {
+			color: transparent;
+		}
+	}
+	
+	@-webkit-keyframes "blink" {
+		from,
+		to {
+			color: white;
+		}
+		50% {
+			color: transparent;
+		}
+	}
+	
+	@-ms-keyframes "blink" {
+		from,
+		to {
+			color: white;
+		}
+		50% {
+			color: transparent;
+		}
+	}
+	
+	@-o-keyframes "blink" {
+		from,
+		to {
+			color: white;
+		}
+		50% {
+			color: transparent;
+		}
+	}
 </style>
 
 <button onclick="bconsole.clear();">Clear Console</button>
 <div id="frame" class="jsb-frame" style="float: left; margin: 5px;" tabIndex="0">
-  <div id="screen-wrapper" class="jsb-wrapper">
-    <div id="lores" class="jsb-lores"></div>
-    <canvas id="hires" width="560" height="384" class="jsb-hires"></canvas>
-    <canvas id="hires2" width="560" height="384" class="jsb-hires"></canvas>
-    <div id="screen" class="jsb-tty"></div>
-  </div>
+	<div id="screen-wrapper" class="jsb-wrapper">
+		<div id="lores" class="jsb-lores"></div>
+		<canvas id="hires" width="560" height="384" class="jsb-hires"></canvas>
+		<canvas id="hires2" width="560" height="384" class="jsb-hires"></canvas>
+		<div id="screen" class="jsb-tty"></div>
+	</div>
 </div>
 
 
@@ -44,34 +106,35 @@
    var bconsole = new BASIC_console(lore, 80);
    bconsole.init();
 
+   
   bconsole.write('BASIC console');
-  bconsole.inertLineBreak();
+  bconsole.insertLineBreak();
   bconsole.write('Written by: Nauman Umer');
-  bconsole.inertLineBreak();
-  bconsole.inertLineBreak();
+  bconsole.insertLineBreak();
+  bconsole.insertLineBreak();
   bconsole.write('abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ');
-  bconsole.inertLineBreak();
+  bconsole.insertLineBreak();
   bconsole.write('1234567890.:,;\'"(!?)+-*/=');
-  bconsole.inertLineBreak();
+  bconsole.insertLineBreak();
   bconsole.write('The quick brown fox jumps over a lazy dog. 1234567890');
-  bconsole.inertLineBreak();
-  bconsole.inertLineBreak();
-  bconsole.write("You can write here by just click here and typing.");
-  bconsole.inertLineBreak();
-  bconsole.write("if you are phone user tab here and keyboard will apear but enter key will be disabled.");
+  bconsole.insertLineBreak();
+  bconsole.write('Start typing here: ');
+  bconsole.showCaret();
 
 
    $("#console-input").keyup(function( e ) {
-     if (e.keyCode == 13) {
-       bconsole.inertLineBreak();
-       $(this).val('');
-       return false;
-     } else if (e.keyCode == 8){
-       bconsole.backSpace();
-       return false;
-     }
-    var text = $(this).val();
-    bconsole.write(text);
-    $(this).val('');
+	 if(bconsole.isCaretShown){
+	  if (e.keyCode == 13) {
+		bconsole.insertLineBreak();
+		$(this).val('');
+		return false;
+	  } else if (e.keyCode == 8){
+		bconsole.backSpace();
+		return false;
+	  }
+	  var text = $(this).val();
+	  bconsole.write(text);
+	  $(this).val('');
+	 }
   });
 </script>
