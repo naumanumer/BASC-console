@@ -19,8 +19,8 @@ function BASIC_console(element, width) {
   var foreColor = "#999", backColor = "#212121",
     table, input,
     lines = 25,
-    foreColor = "#fff",
-    crntPos = { line: 0, char: 0 };
+    foreColor = "#fff";
+  this.crntPos ={ line: 0, char: 0 };
 
   this.init = function () {
     var x, y, tbody, tr, td;
@@ -70,13 +70,13 @@ function BASIC_console(element, width) {
 
   this.write = function (text) {
     for (var i = 0, len = text.length; i < len; i++) {
-      this.writeChar(text[i], crntPos);
+      this.writeChar(text[i], this.crntPos);
 
-      if (crntPos.char < width - 1)
-        crntPos.char++;
+      if (this.crntPos.char < width - 1)
+        this.crntPos.char++;
       else {
-        crntPos.line++;
-        crntPos.char = 0;
+        this.crntPos.line++;
+        this.crntPos.char = 0;
       }
     }
   };
@@ -97,13 +97,19 @@ function BASIC_console(element, width) {
   }
 
   this.inertLineBreak = function(){
-    crntPos.line++;
-    crntPos.char = 0;
+    this.crntPos.line++;
+    this.crntPos.char = 0;
   }
 
   this.backSpace = function(){
-    this.writeChar(" ", {line: crntPos.line, char: crntPos.char-1});
-    crntPos.char--;
+    if(this.crntPos.char-1 < 0){
+      var current = {line: this.crntPos.line-1, char: width-1}
+      this.writeChar(" ", current);
+      this.crntPos = current;
+    } else {
+      this.writeChar(" ", {line: this.crntPos.line, char: this.crntPos.char-1});
+      this.crntPos.char--;
+    }
   }
 
   this.clear = function () {
@@ -113,8 +119,8 @@ function BASIC_console(element, width) {
         td.innerText = "";
       }
     }
-    crntPos.line=0;
-    crntPos.char=0;
+    this.crntPos.line=0;
+    this.crntPos.char=0;
   };
 
   this.clearLine = function (lineNum) {
@@ -133,7 +139,7 @@ function BASIC_console(element, width) {
       this.writeAtLine(nextLine, i);
     }
 
-    crntPos.line--;
+    this.crntPos.line--;
   };
 
   this.cloneLine = function (lineNum) {
