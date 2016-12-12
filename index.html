@@ -89,7 +89,16 @@
 	}
 </style>
 
-<button onclick="bconsole.clear();">Clear Console</button>
+<button onclick="bconsole.clear();$(input).focus();">Clear Console</button>
+<button onclick="bconsole.moveCaretUp();$(input).focus();">&uarr;</button>
+<button onclick="bconsole.moveCaretDown();$(input).focus();">&darr;</button>
+<button onclick="bconsole.moveCaretBack();$(input).focus();">&larr;</button>
+<button onclick="bconsole.moveCaretFore();$(input).focus();">&rarr;</button>
+<button onclick="bconsole.moveCaretToHome();$(input).focus();">Home</button>
+<button onclick="bconsole.moveCaretToEnd();$(input).focus();">End</button>
+<button onclick="bconsole.insertLineBreak();$(input).focus();">&#8626; Enter</button>
+<button onclick="bconsole.backSpace();$(input).focus();">&#x232B; del</button>
+
 <div id="frame" class="bsc-frame" style="float: left; margin: 5px;" tabIndex="0">
 	<div id="screen-wrapper" class="bsc-wrapper">
 		<div id="text_mode" class="bsc-lores"></div>
