@@ -1,4 +1,4 @@
-# BASC console
+# BASIC console
 
 ![BASIC console](BASIC%20console.png "BASIC console")
 
