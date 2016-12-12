@@ -46,8 +46,10 @@ $("#console-input").keyup(function( e ) {
 ## API references
 
 `BASIC_console(element, width)`
-	* `element: any` HTML DOM elemen
-	* `width: int` Number of chars in a line. (each char have 8px width and 19px height);
+
+* `element: any` HTML DOM element
+* `width: int` Number of chars in a line. (each char have 8px width and 19px height);
+
 ### Props
 * `.crntPos: {line: LINE_NO, char: ROW_NO}` current caret position.
 * `.isCaretShown : boolean` true if caret is initialized
