@@ -4,12 +4,12 @@
 		src: url(freedos_16.woff);
 	}
 	
-	#lores td {
+	#text_mode td {
 		width: 8px;
 		height: 19px;
 	}
 	
-	#lores table {
+	#text_mode table {
 		table-layout: fixed;
 		border-collapse: collapse;
 		font-family: freedos;
@@ -87,12 +87,9 @@
 </style>
 
 <button onclick="bconsole.clear();">Clear Console</button>
-<div id="frame" class="jsb-frame" style="float: left; margin: 5px;" tabIndex="0">
-	<div id="screen-wrapper" class="jsb-wrapper">
-		<div id="lores" class="jsb-lores"></div>
-		<canvas id="hires" width="560" height="384" class="jsb-hires"></canvas>
-		<canvas id="hires2" width="560" height="384" class="jsb-hires"></canvas>
-		<div id="screen" class="jsb-tty"></div>
+<div id="frame" class="bsc-frame" style="float: left; margin: 5px;" tabIndex="0">
+	<div id="screen-wrapper" class="bsc-wrapper">
+		<div id="text_mode" class="bsc-lores"></div>
 	</div>
 </div>
 
@@ -102,7 +99,7 @@
 <script src="jquery.min.js"></script>
 <script src="bconsole.js"></script>
 <script>
-   var lore = document.getElementById('lores');
+   var lore = document.getElementById('text_mode');
    var bconsole = new BASIC_console(lore, 80);
    bconsole.init();
 
