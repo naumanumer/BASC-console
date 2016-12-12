@@ -49,17 +49,36 @@ $("#console-input").keyup(function( e ) {
 	* `element: any` HTML DOM elemen
 	* `width: int` Number of chars in a line. (each char have 8px width and 19px height);
 ### Props
-* `.crntPos` currencaret position. formate: `{line: LINE_NO, char: ROW_NO}`.
-* `.isCaretShown : boolean` 
+* `.crntPos: {line: LINE_NO, char: ROW_NO}` current caret position.
+* `.isCaretShown : boolean` true if caret is initialized
 
 ### Methods
-* `.init()`
-	* Takes no arguments and initialize `BASIC_console` in the given element while initializing `BASIC_console`
-* `.setBackground(color)`
+* `.init()` Initialize `BASIC_console` in the given element while initializing `BASIC_console`
+	* Takes no arguments.
+* `.setBackground(color)` Sets background color.
 	* `color: string` any valid css color.
-* `.setForecolor(color)`
+* `.setForecolor(color)` Sets foreground color.
 	* `color: string` any valid css color. (still no sets caret color).
-
+* `.write(text)` write text to at `crntPos`.
+	* `text: string` any string but `\n` is not rendered as new line.
+* `.writeChar(char, pos)` write a char at specified position.
+	* `char: string` any string made of one char. if lenght of char is more then 1 it will increase width of `tr`. char can be unicode char i.e.`&#9608;`.
+	* `pos: {line: LINE_NO, char: ROW_NO}` the position at which char is rendered.
+* `.writeAtLine(text, linenum)` write a text at specified line number.
+	* `text: string` any string rendered same as `write`
+	* `linenum: int` any valid line number
+* `.insertLineBreak()` insert a line break.
+	* Takes no argument.
+* `.backSpace()` remove a char previous from `crntPos`. Remove last char from previous last if `crntPos` is at 0 index of a line.
+	* Takes no argument.
+* `.clear()` Clear the whole console.
+	* Takes no argument. 
+* `.clearLine(linenum)` clear specified line.
+	* `linenum: int` any valid line number.
+* `.scrollUp()` Scroll console content by one line.
+	* Takes no argument. 
+* `.cloneLine(linenum)` Returns text from specified line
+	* `linenum: int` any valid line number.
 
 
 # Contribute
