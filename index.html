@@ -124,14 +124,48 @@
 
    $("#console-input").keyup(function( e ) {
 	 if(bconsole.isCaretShown){
-	  if (e.keyCode == 13) {
+	  
+	  if (e.keyCode == 13) { //enter
 		bconsole.insertLineBreak();
 		$(this).val('');
 		return false;
-	  } else if (e.keyCode == 8){
+	  }
+
+	  else if (e.keyCode == 8){ //backspace
 		bconsole.backSpace();
 		return false;
 	  }
+
+	  else if (e.keyCode == 37){ //back
+		  bconsole.moveCaretBack();
+		  return false;
+	  }
+
+	  else if (e.keyCode == 39){ //Fore
+		  bconsole.moveCaretFore();
+		  return false;
+	  }
+
+	  else if (e.keyCode == 38){ //Up
+		  bconsole.moveCaretUp();
+		  return false;
+	  }
+
+	  else if (e.keyCode == 40){ //down
+		  bconsole.moveCaretDown();
+		  return false;
+	  }
+
+	  else if (e.keyCode == 36){ //Home
+		  bconsole.moveCaretToHome();
+		  return false;
+	  }
+
+	  else if (e.keyCode == 35){ //End
+		  bconsole.moveCaretToEnd();
+		  return false;
+	  }
+
 	  var text = $(this).val();
 	  bconsole.write(text);
 	  $(this).val('');
