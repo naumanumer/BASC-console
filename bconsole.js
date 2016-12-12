@@ -1,6 +1,6 @@
 function BASIC_console(element, width) {
 
-  var foreColor = "#999", backColor = "#212121",
+  var backColor = "#212121",
     table, input,
     lines = 25,
     foreColor = "#fff",
@@ -171,16 +171,8 @@ function BASIC_console(element, width) {
   }
 
   this.getScreenSize = function () {
-    return { width: width, height: lines };
-  };
-
-  this.getScreenSizeInPx = function () {
     return { width: $(table).width(), height: $(table).height() };
   }
-
-  this.getColor = function () {
-    return { fore: foreColor, back: backColor };
-  };
 
   this.appendInput = function () {
     input = document.createElement('input');
