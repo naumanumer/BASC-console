@@ -96,6 +96,7 @@ function BASIC_console(element, width) {
   }
 
   this.backSpace = function () {
+    this.removeCaret();
     if (this.crntPos.char - 1 < 0) {
       var current = { line: this.crntPos.line - 1, char: width - 1 }
       this.writeChar(" ", current);
@@ -105,7 +106,7 @@ function BASIC_console(element, width) {
       this.crntPos.char--;
     }
     if(this.isCaretShown)
-          this.refreshCaret();
+          this.showCaret();
   }
 
   this.clear = function () {
