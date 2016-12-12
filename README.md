@@ -16,9 +16,9 @@ git clone https://github.com/naumanumer/BASIC-console.git
 * jquery
 NOTE: all te denpendencies are provided with code itself.
 
-## API references
+## Initializing
 
-Initialize the console using:
+Initialize the console in your own html code:
 ```javascript
 var bconsoleElement = document.getElementById('ELEMENT_ID_HERE');
 var bconsole = new BASIC_console(bconsoleElement, 80);
@@ -43,7 +43,9 @@ $("#console-input").keyup(function( e ) {
   });
  ```
  
+## API references
 
+* `BASIC_console.init` T
 
 
 # Contribute
