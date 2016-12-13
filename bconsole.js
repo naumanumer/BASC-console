@@ -37,6 +37,7 @@ function BASIC_console(element, width) {
     element.innerHTML = "";
     element.appendChild(table);
     this.appendInput();
+    this.clear();
   };
 
   this.setBackground = function (color) {
@@ -118,7 +119,7 @@ function BASIC_console(element, width) {
     for (var y = 0; y < lines; y++) {
       for (var x = 0; x < width; x++) {
         var td = document.getElementById(`line-${y}-col-${x}`);
-        td.innerHTML = "";
+        td.innerHTML = "&nbsp";
       }
     }
     this.crntPos.line = 0;
@@ -130,7 +131,7 @@ function BASIC_console(element, width) {
   this.clearLine = function (lineNum) {
     for (var i = 0; i < width; i++) {
       var td = document.getElementById(`line-${lineNum}-col-${i}`);
-      td.innerHTML = "";
+      td.innerHTML = "&nbsp";
     }
     if(this.isCaretShown)
           this.refreshCaret();
