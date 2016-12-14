@@ -292,6 +292,11 @@ function BASIC_console(element, width) {
     var endOfChar = this.getEndOfWord(this.crntPos.line, this.crntPos.char);
     this.moveCaretTo(endOfChar.line, endOfChar.char);
   }
+  
+  this.moveCaretToStartOfChar = function(){
+    var endOfChar = this.getStartOfWord(this.crntPos.line, this.crntPos.char);
+    this.moveCaretTo(endOfChar.line, endOfChar.char);
+  }
 
 // <!-- Caret Movements -->
 
@@ -317,8 +322,8 @@ function BASIC_console(element, width) {
   
   this.getStartOfWord= function(line, char){
     var x, y, found;
-    for (y = line; y > -1; y++) {
-      for (x = char-1; x < width; x += 1) {
+    for (y = line; y > -1; y--) {
+      for (x = char-1; x < -1; x--) {
         var tdText = document.getElementById(`line-${y}-col-${x}`).innerHTML;
         tdChar = tdText.slice(0, 6) == '&nbsp;' ? '&nbsp;' : tdText.slice(0, 1);
         if (tdChar.match(/^[a-z0-9]+$/i) && tdChar!= "&nbsp;") 
