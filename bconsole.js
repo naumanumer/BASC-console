@@ -298,7 +298,7 @@ function BASIC_console(element, width) {
   this.getEndOfWord= function(line, char){
     var x, y, found;
     for (y = line; y < lines; y++) {
-      for (x = char; x < width; x += 1) {
+      for (x = char+1; x < width; x += 1) {
         var tdText = document.getElementById(`line-${y}-col-${x}`).innerHTML;
         tdChar = tdText.slice(0, 6) == '&nbsp;' ? '&nbsp;' : tdText.slice(0, 1);
         if (tdChar.match(/^[a-z0-9]+$/i) && tdChar!= "&nbsp;") 
