@@ -298,7 +298,27 @@ function BASIC_console(element, width) {
   this.getEndOfWord= function(line, char){
     var x, y, found;
     for (y = line; y < lines; y++) {
+      x = 0;
       for (x = char+1; x < width; x += 1) {
+        var tdText = document.getElementById(`line-${y}-col-${x}`).innerHTML;
+        tdChar = tdText.slice(0, 6) == '&nbsp;' ? '&nbsp;' : tdText.slice(0, 1);
+        if (tdChar.match(/^[a-z0-9]+$/i) && tdChar!= "&nbsp;") 
+            continue;
+        else{
+          found =true;
+          break;
+        }
+      }
+      if(found)
+        break;
+    }
+    return {line: y, char:x};
+  }
+  
+  this.getStartOfWord= function(line, char){
+    var x, y, found;
+    for (y = line; y > -1; y++) {
+      for (x = char-1; x < width; x += 1) {
         var tdText = document.getElementById(`line-${y}-col-${x}`).innerHTML;
         tdChar = tdText.slice(0, 6) == '&nbsp;' ? '&nbsp;' : tdText.slice(0, 1);
         if (tdChar.match(/^[a-z0-9]+$/i) && tdChar!= "&nbsp;") 
