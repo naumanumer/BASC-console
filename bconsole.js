@@ -301,7 +301,7 @@ function BASIC_console(element, width) {
       for (x = char; x < width; x += 1) {
         var tdText = document.getElementById(`line-${y}-col-${x}`).innerHTML;
         tdChar = tdText = tdText.slice(0, 6) == '&nbsp;' ? '&nbsp;' : tdText.slice(0, 1);
-        if (tdChar.match(/[a-z]/i)) 
+        if (tdChar.match(/^[a-z0-9]+$/i)) 
             continue;
         else{
           found =true;
