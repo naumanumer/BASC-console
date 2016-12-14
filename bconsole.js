@@ -300,8 +300,8 @@ function BASIC_console(element, width) {
     for (y = line; y < lines; y++) {
       for (x = char; x < width; x += 1) {
         var tdText = document.getElementById(`line-${y}-col-${x}`).innerHTML;
-        tdChar = tdText = tdText.slice(0, 6) == '&nbsp;' ? '&nbsp;' : tdText.slice(0, 1);
-        if (tdChar.match(/^[a-z0-9]+$/i)) 
+        tdChar = tdText.slice(0, 6) == '&nbsp;' ? '&nbsp;' : tdText.slice(0, 1);
+        if (tdChar.match(/^[a-z0-9]+$/i) && tdChar!= "&nbsp;") 
             continue;
         else{
           found =true;
